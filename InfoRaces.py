@@ -2,18 +2,16 @@ import requests
 import json
 
 year = input("year?")
-if(year.isdigit()):
+if(year.isdigit()): #IMPROVE: change isdigit with cast to int and catch exception
     raceNumber = input("Race number?")
     if(raceNumber.isdigit()):
-        url = "http://ergast.com/api/f1/" + str(year) + "/" + str(raceNumber) + "/results.json"
-        print(url)
-        r = requests.get(url)
+        r = requests.get("http://ergast.com/api/f1/{}/{}/results.json".format(year, raceNumber))
         resultsJson = r.json()
         print((resultsJson))
         total = resultsJson['MRData']['total']
         print(total)
         if(int(resultsJson['MRData']['total']) != 0):
-            print("exist. all ok")
+            
         else:
             print("The race you are looking for doesn't exist")
     else:
