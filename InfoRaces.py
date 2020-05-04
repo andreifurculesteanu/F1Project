@@ -9,14 +9,16 @@ if(year.isdigit()): #IMPROVE: change isdigit with cast to int and catch exceptio
         resultsJson = r.json()
         if(int(resultsJson['MRData']['total']) != 0):
             arrayRaces = resultsJson['MRData']['RaceTable']['Races']
-            print('\n')
-            print('Circuit name: {}'.format(arrayRaces[0]['Circuit']['circuitName']))
+            circuit = arrayRaces[0]['Circuit']
+            print()
+            print('Circuit name: {}'.format(circuit['circuitName']))
             print('{} --- {} --- Round: {}'.format(arrayRaces[0]['raceName'], arrayRaces[0]['season'], arrayRaces[0]['round']))
-            print('{}, {}'.format(arrayRaces[0]['Circuit']['Location']['locality'], arrayRaces[0]['Circuit']['Location']['country']))
-            print('\n')
+            print('{}, {}'.format(circuit['Location']['locality'], circuit['Location']['country']))
+            print()
             arrayResults = arrayRaces[0]['Results']
             for result in arrayResults:
-                print('{}. {} --- {} --- Car: {} --- Points: {}'.format(result['position'], result['Driver']['familyName'], result['Driver']['nationality'] , result['Constructor']['name'], result['points']))
+                driver = result['Driver']
+                print('{}. {} --- {} --- Car: {} --- Points: {}'.format(result['position'], driver['familyName'], driver['nationality'] , result['Constructor']['name'], result['points']))
         else:
             print("The race you are looking for doesn't exist")
     else:
