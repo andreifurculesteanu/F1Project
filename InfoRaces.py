@@ -9,10 +9,14 @@ if(year.isdigit()): #IMPROVE: change isdigit with cast to int and catch exceptio
         resultsJson = r.json()
         if(int(resultsJson['MRData']['total']) != 0):
             arrayRaces = resultsJson['MRData']['RaceTable']['Races']
-            print(arrayRaces[0]['raceName'])
+            print('\n')
+            print('Circuit name: {}'.format(arrayRaces[0]['Circuit']['circuitName']))
+            print('{} --- {} --- Round: {}'.format(arrayRaces[0]['raceName'], arrayRaces[0]['season'], arrayRaces[0]['round']))
+            print('{}, {}'.format(arrayRaces[0]['Circuit']['Location']['locality'], arrayRaces[0]['Circuit']['Location']['country']))
+            print('\n')
             arrayResults = arrayRaces[0]['Results']
             for result in arrayResults:
-                print('{}. {} --- Car: {}'.format(result['position'], result['Driver']['familyName'], result['Constructor']['name']))
+                print('{}. {} --- {} --- Car: {} --- Points: {}'.format(result['position'], result['Driver']['familyName'], result['Driver']['nationality'] , result['Constructor']['name'], result['points']))
         else:
             print("The race you are looking for doesn't exist")
     else:
