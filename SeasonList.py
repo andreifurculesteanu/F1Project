@@ -12,8 +12,8 @@ try:
         arrayRaces = resultsJson['MRData']['RaceTable']['Races']
         print("Year: {}".format((intYear)))
         for races in arrayRaces:
-            arrowDate = arrow.get(races['date']).format('MMM Do, YYYY')
-            print("Round: {} --- Race: {} --- Date: {} --- Circuit: {} --- Locality: {} --- Country: {}".format(races['round'], races['raceName'], arrowDate, races['Circuit']['circuitName'], races['Circuit']['Location']['locality'], races['Circuit']['Location']['country']))
+            parsedDate = arrow.get(races['date']).format('MMM Do, YYYY')
+            print("Round: {} --- Race: {} --- Date: {} --- Circuit: {} --- Locality: {} --- Country: {}".format(races['round'], races['raceName'], parsedDate, races['Circuit']['circuitName'], races['Circuit']['Location']['locality'], races['Circuit']['Location']['country']))
     else:
         print("There are no results for the year you are looking")
 
