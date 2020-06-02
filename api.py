@@ -9,8 +9,8 @@ def get_info_constructor(name):
     results_json = r.json()
     print(results_json)
     if (int(results_json['MRData']['total']) != 0):
-        url = results_json['MRData']['ConstructorTable']['Constructors'][0]['url']
+        return results_json['MRData']['ConstructorTable']['Constructors'][0]['url']
     else:
-        url = "The team doesn't exist"
-    return url
+        return "The team doesn't exist"
+
 
