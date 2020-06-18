@@ -39,29 +39,32 @@ class Api:
     def get_info_races(self, year, race_number):
         try:
             int_year = int(year)
-            try:
-                int_race_number = race_number
-                results_json = self._make_request("api/f1/{}/{}/results.json".format(year, int_race_number))
-                # results_json = r.json()
-                if int(results_json['MRData']['total']) != 0:
-                    array_races = results_json['MRData']['RaceTable']['Races']
-                    circuit = array_races[0]['Circuit']
-                    print()
-                    print('Circuit name: {}'.format(circuit['circuitName']))
-                    print('{} --- {} --- Round: {}'.format(array_races[0]['raceName'], array_races[0]['season'],
-                                                           array_races[0]['round']))
-                    print('{}, {}'.format(circuit['Location']['locality'], circuit['Location']['country']))
-                    print()
-                    array_results = array_races[0]['Results']
-                    for result in array_results:
-                        driver = result['Driver']
-                        print('{}. {} --- {} --- Car: {} --- Points: {}'.format(result['position'], driver['familyName'],
-                                                                                driver['nationality'],
-                                                                                result['Constructor']['name'],
-                                                                                result['points']))
-                else:
-                    print("The race you are looking for doesn't exist")
-            except ValueError:
-                print("Race number error. Ex: 10")
+            if int_year < 1950 or int_year > 2020:
+                print("Formula 1 has started in 1950, and we are in 2020")
+            else:
+                try:
+                    int_race_number = race_number
+                    results_json = self._make_request("api/f1/{}/{}/results.json".format(year, int_race_number))
+                    # results_json = r.json()
+                    if int(results_json['MRData']['total']) != 0:
+                        array_races = results_json['MRData']['RaceTable']['Races']
+                        circuit = array_races[0]['Circuit']
+                        print()
+                        print('Circuit name: {}'.format(circuit['circuitName']))
+                        print('{} --- {} --- Round: {}'.format(array_races[0]['raceName'], array_races[0]['season'],
+                                                               array_races[0]['round']))
+                        print('{}, {}'.format(circuit['Location']['locality'], circuit['Location']['country']))
+                        print()
+                        array_results = array_races[0]['Results']
+                        for result in array_results:
+                            driver = result['Driver']
+                            print('{}. {} --- {} --- Car: {} --- Points: {}'.format(result['position'], driver['familyName'],
+                                                                                    driver['nationality'],
+                                                                                    result['Constructor']['name'],
+                                                                                    result['points']))
+                    else:
+                        print("The race you are looking for doesn't exist")
+                except ValueError:
+                    print("Race number error. Ex: 10")
         except ValueError:
             print("Year error. Ex: 1993")
