@@ -45,7 +45,6 @@ class Api:
                 try:
                     int_race_number = race_number
                     results_json = self._make_request("api/f1/{}/{}/results.json".format(year, int_race_number))
-                    # results_json = r.json()
                     if int(results_json['MRData']['total']) != 0:
                         array_races = results_json['MRData']['RaceTable']['Races']
                         circuit = array_races[0]['Circuit']
