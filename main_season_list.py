@@ -1,6 +1,3 @@
-import requests
-import json
-import arrow
 from api import Api
 
 year = input("year?")
