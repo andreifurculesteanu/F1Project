@@ -1,4 +1,4 @@
-from api import Api
+from src.api.api import Api
 
 
 class Menu:
