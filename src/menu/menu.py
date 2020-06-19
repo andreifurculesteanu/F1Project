@@ -38,7 +38,8 @@ class Menu:
             try:
                 api = Api()
                 user_option = int(input(""))
-                if user_option in range(5):
+                available_entries = [0, 1, 2, 3]
+                if user_option in available_entries:
                     if user_option == 1:
                         year = input("year?")
                         race_number = input("Race number?")
@@ -57,6 +58,7 @@ class Menu:
                         break
                 else:
                     print("Choose one of the available options.")
+                    self.menu()
                 break
             except ValueError:
                 print("*** Error, choose a valid option! ***")
