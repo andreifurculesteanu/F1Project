@@ -20,13 +20,15 @@ class Menu:
         print("2. No")
         try:
             user_option = int(input(""))
-            if user_option in range(3):
+            available_entries = [1, 2]
+            if user_option in available_entries:
                 if user_option == 1:
                     self.menu()
                 elif user_option == 2:
                     print("Bye! Hope to see you soon!")
             else:
                 print("Choose one of the available options.")
+                self.new_search()
         except ValueError:
             print("*** Error, choose a valid option! ***")
 
