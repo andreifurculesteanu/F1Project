@@ -9,3 +9,7 @@ class Race:
         self.name = name
         self.date = date
         self.circuit = circuit
+
+    def __str__(self):
+        return "Round: {} --- Race: {} --- Date: {} --- {}".format(
+            self.round_number, self.name, self.date, self.circuit)
