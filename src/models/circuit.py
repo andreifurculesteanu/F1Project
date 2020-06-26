@@ -7,3 +7,7 @@ class Circuit:
         self.name = name
         self.location = location
         self.country = country
+
+    def __str__(self):
+        return "Circuit: {} --- Locality: {} --- Country: {}".format(
+            self.name, self.location, self.country)

@@ -1,6 +1,9 @@
 import requests
 import arrow
 
+from src.models.circuit import Circuit
+from src.models.race import Race
+
 
 class Api:
     base_url = "http://ergast.com/{}"
@@ -27,10 +30,11 @@ class Api:
                 array_race = results_json['MRData']['RaceTable']['Races']
                 print("Year: {}".format(int_year))
                 for races in array_race:
+                    races_circuit = races['Circuit']
+                    circuit = Circuit(races_circuit['circuitName'], races_circuit['Location']['locality'], races_circuit['Location']['country'])
                     parsed_date = arrow.get(races['date']).format('MMM Do, YYYY')
-                    print("Round: {} --- Race: {} --- Date: {} --- Circuit: {} --- Locality: {} --- Country: {}".format(
-                        races['round'], races['raceName'], parsed_date, races['Circuit']['circuitName'],
-                        races['Circuit']['Location']['locality'], races['Circuit']['Location']['country']))
+                    race = Race(races['round'], races['raceName'], parsed_date, circuit)
+                    print(race)
             else:
                 print("There are no results for the year you are looking")
         except ValueError:
