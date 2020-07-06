@@ -1,19 +1,7 @@
 from src.api.api import Api
-import fileinput
 
 
 class Menu:
-    dev = True
-
-    def __init__(self, dev):
-        self.dev = dev
-
-    def _ask_input(self, msg):
-        if (self.dev == True):
-            return input(msg)
-        else:
-            return fileinput.input()[0].rstrip()
-
     def print_menu(self):
         print("________________________")
         print("Welcome to F1 App:")
@@ -31,7 +19,7 @@ class Menu:
         print("1. Yes")
         print("2. No")
         try:
-            user_option = int(self._ask_input(""))
+            user_option = int(input(""))
             available_entries = [1, 2]
             if user_option in available_entries:
                 if user_option == 1:
@@ -49,20 +37,20 @@ class Menu:
             self.print_menu()
             try:
                 api = Api()
-                user_option = int(self._ask_input(""))
+                user_option = int(input(""))
                 available_entries = [0, 1, 2, 3]
                 if user_option in available_entries:
                     if user_option == 1:
-                        year = input(self._ask_input("year?"))
-                        race_number = input(self._ask_input("Race number?"))
+                        year = input(input("year?"))
+                        race_number = input(input("Race number?"))
                         api.get_info_races(year, race_number)
                         self.new_search()
                     elif user_option == 2:
-                        name = input(self._ask_input("Constructor name?"))
+                        name = input(input("Constructor name?"))
                         print(api.get_info_constructor(name))
                         self.new_search()
                     elif user_option == 3:
-                        year = input(self._ask_input("year?"))
+                        year = input(input("year?"))
                         api.get_season_list(year)
                         self.new_search()
                     elif user_option == 0:
