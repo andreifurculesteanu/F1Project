@@ -1,5 +1,5 @@
 from src.api.api import Api
-import sys
+import fileinput
 
 
 class Menu:
@@ -12,7 +12,7 @@ class Menu:
         if (self.dev == True):
             return input(msg)
         else:
-            return sys.stdin.readlines()[0].strip()
+            return fileinput.input()[0].rstrip()
 
     def print_menu(self):
         print("________________________")
