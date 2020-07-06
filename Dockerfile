@@ -9,7 +9,9 @@ RUN apt install -y  python3-pip \
                     python3-dev \
                     build-essential \
                     vim \
-                    default-libmysqlclient-dev
+                    default-libmysqlclient-dev \
+                    net-tools \
+                    netcat
 
 WORKDIR /var/www/app
 COPY requirements.txt .
