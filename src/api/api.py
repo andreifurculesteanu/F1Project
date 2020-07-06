@@ -19,7 +19,8 @@ class Api:
         name = name.replace(" ", "_")
         results_json = self._make_request("api/f1/constructors/{}.json".format(name))
         if int(results_json['MRData']['total']) != 0:
-            constructor = Constructor(results_json['MRData']['ConstructorTable']['Constructors'][0]['name'], results_json['MRData']['ConstructorTable']['Constructors'][0]['url'])
+            constructor_info = results_json['MRData']['ConstructorTable']['Constructors'][0]
+            constructor = Constructor(constructor_info['name'], constructor_info['url'])
             print(constructor)
         else:
             print("The team doesn't exist")
