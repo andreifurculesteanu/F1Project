@@ -2,6 +2,7 @@ import requests
 import arrow
 
 from src.models.circuit import Circuit
+from src.models.constructor import Constructor
 from src.models.race import Race
 
 
@@ -17,10 +18,11 @@ class Api:
         name = name.strip()
         name = name.replace(" ", "_")
         results_json = self._make_request("api/f1/constructors/{}.json".format(name))
-        print(results_json)
         if int(results_json['MRData']['total']) != 0:
-            return results_json['MRData']['ConstructorTable']['Constructors'][0]['url']
-        return "The team doesn't exist"
+            constructor = Constructor(results_json['MRData']['ConstructorTable']['Constructors'][0]['name'], results_json['MRData']['ConstructorTable']['Constructors'][0]['url'])
+            print(constructor)
+        else:
+            print("The team doesn't exist")
 
     def get_season_list(self, year):
         try:
