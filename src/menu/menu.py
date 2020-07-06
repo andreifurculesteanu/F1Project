@@ -1,7 +1,19 @@
 from src.api.api import Api
+import sys
 
 
 class Menu:
+    dev = True
+
+    def __init__(self, dev):
+        self.dev = dev
+
+    def _ask_input(self, msg):
+        if (self.dev == True):
+            return input(msg)
+        else:
+            return sys.stdin.readlines()[0].strip()
+
     def print_menu(self):
         print("________________________")
         print("Welcome to F1 App:")
@@ -19,7 +31,7 @@ class Menu:
         print("1. Yes")
         print("2. No")
         try:
-            user_option = int(input(""))
+            user_option = int(self._ask_input(""))
             available_entries = [1, 2]
             if user_option in available_entries:
                 if user_option == 1:
@@ -37,20 +49,20 @@ class Menu:
             self.print_menu()
             try:
                 api = Api()
-                user_option = int(input(""))
+                user_option = int(self._ask_input(""))
                 available_entries = [0, 1, 2, 3]
                 if user_option in available_entries:
                     if user_option == 1:
-                        year = input("year?")
-                        race_number = input("Race number?")
+                        year = input(self._ask_input("year?"))
+                        race_number = input(self._ask_input("Race number?"))
                         api.get_info_races(year, race_number)
                         self.new_search()
                     elif user_option == 2:
-                        name = input("Constructor name?")
+                        name = input(self._ask_input("Constructor name?"))
                         print(api.get_info_constructor(name))
                         self.new_search()
                     elif user_option == 3:
-                        year = input("year?")
+                        year = input(self._ask_input("year?"))
                         api.get_season_list(year)
                         self.new_search()
                     elif user_option == 0:
