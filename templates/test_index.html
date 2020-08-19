@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>My First Heading</h1>
+        <p>My first paragraph.</p>
+        <p> {{name_html}}</p>
+        <p> {{age}}</p>
+
+        {% if gender_html == 'm': %}
+             <p> He's a {{genderlist_html[0]}}</p>
+        {% else %}
+              <p> She's a {{genderlist_html[1]}}</p>
+        {% endif %}
+
+
+        {% for item in list_html %}
+            <p> {{item}} </p>
+        {% endfor %}
+
+    </body>
+</html>
