@@ -32,7 +32,7 @@ def render_html(name='default'):
     gender_list = ['male', 'female']
     gender = 'm'
     my_list = [1,2,3,4,5]
-    return render_template('index.html', name_html=name, age_html=age, gender_html=gender, genderlist_html=gender_list, list_html = my_list)
+    return render_template('test_index.html', name_html=name, age_html=age, gender_html=gender, genderlist_html=gender_list, list_html = my_list)
 
 
 app.run(debug=True)
