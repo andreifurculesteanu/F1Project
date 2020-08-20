@@ -1,16 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="../static/css/indexCSS.css">
-</head>
-<body>
+{% extends "./base/base.html" %}
 
-<h1>F1 Project</h1>
+{% block stylesheet %}
 
-<p>Welcome to my project</p>
+{% endblock %}
 
-<a href="/login" class="button">Login</a>
-<a href="/register" class="button">Register</a>
+{% block title %}
+    <title>Index</title>
+{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <h1>F1 Project</h1>
+
+    <p>Welcome to my project</p>
+
+    <a href="/login" class="button">Login</a>
+    <a href="/register" class="button">Register</a>
+{% endblock %}
