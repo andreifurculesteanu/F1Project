@@ -18,4 +18,7 @@ def register():
     return render_template('register.html')
 
 
-app.run(debug=True)
+if __name__ == '__main__':
+    app.config.from_pyfile('./config/config.cfg')
+    app.run()
+
