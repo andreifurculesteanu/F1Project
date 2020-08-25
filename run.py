@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
@@ -17,6 +18,8 @@ def login():
 def register():
     return render_template('register.html')
 
+
+db =
 
 if __name__ == '__main__':
     app.config.from_pyfile('./config/config.cfg')
