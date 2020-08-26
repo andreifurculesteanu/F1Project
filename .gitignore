@@ -3,7 +3,4 @@
 venv
 __pycache*
 *.pyc
-<<<<<<< HEAD
 config.cfg
-=======
->>>>>>> 18a041839850c4068efcc7eac9a3bfb20993c26a
