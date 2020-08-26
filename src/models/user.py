@@ -1,11 +1,12 @@
-from run import db
+from src import db
 
 
-class User:
-    username = db.Column(db.String(), primary_key=True)
-    email = db.Column(db.String())
-    password = db.Column(db.String(length=66))
-    date = db.Column(db.DATE())
+class User(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    username = db.Column(db.String(length=255))
+    email = db.Column(db.String(length=255))
+    password = db.Column(db.String(length=255))
+    date = db.Column(db.Date())
 
     def __init__(self, username, email, password, date):
         self.username = username
