@@ -1,0 +1,33 @@
+{% extends "./base/base.html" %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" type="text/css" href="../static/css/login_register.css">
+{% endblock %}
+
+{% block title %}
+    <title>Login</title>
+{% endblock %}
+
+{% block content %}
+    <div>
+        <form action="">
+            <div class="container">
+                <h1>Login</h1>
+                <p>Please fill in this form to login.</p>
+                <hr>
+
+                <label for="username"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="username" id="username" required>
+
+                <label for="psw"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+
+                <hr>
+
+                <button type="submit" class="registerbtn">Login</button>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}
+

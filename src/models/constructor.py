@@ -7,4 +7,4 @@ class Constructor:
         self.url = url
 
     def __str__(self):
-        return "Team: {} --- Url: {} ".format(self.name, self.url)
+        return "Team: {} --- Url: {} ".format( self.name, self.url)
