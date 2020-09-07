@@ -10,9 +10,28 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/login')
-def login():
+@app.route('/login', methods=['GET'])
+def get_login():
     return render_template('login.html')
+
+
+@app.route('/login', methods=['POST'])
+def post_login():
+    msg_user = ""
+    user = request.form["username"]
+    password = request.form["psw"]
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    user_db = User.query.filter_by(username=user).count()
+    if user_db == 0:
+        msg_user = "Username and/or password invalid"
+        return render_template('login.html', msg_user=msg_user)
+    else:
+        password_db = User.query.filter_by(username=user).first()
+        if hashed_password == password_db.password:
+            return redirect(url_for('profile'))
+        else:
+            msg_user = "Username and/or password invalid"
+            return render_template('login.html', msg_user=msg_user)
 
 
 @app.route('/register', methods=['GET'])
@@ -41,4 +60,9 @@ def post_register():
         new_user = User(user, email, hashed_password, date_register.strftime("%Y/%m/%d"))
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('login'))
+        return redirect(url_for('get_login'))
+
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
