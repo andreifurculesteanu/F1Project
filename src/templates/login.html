@@ -10,14 +10,17 @@
 
 {% block content %}
     <div>
-        <form action="">
+        <form action="{{ url_for('post_login') }}" method="POST">
             <div class="container">
                 <h1>Login</h1>
                 <p>Please fill in this form to login.</p>
                 <hr>
-
+                {% if msg_user %}
+                    <p>{{ msg_user }}</p>
+                {% endif %}
                 <label for="username"><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" name="username" id="username" required>
+
 
                 <label for="psw"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
