@@ -10,7 +10,12 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET'])
+def login():
+    return redirect(url_for('profile'))
+
+
+@app.route('/login', methods=['POST'])
 def login():
     return render_template('login.html')
 
@@ -42,3 +47,8 @@ def post_register():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
+
+
+@app.route('/profile')
+def home():
+    return render_template('profile.html')
