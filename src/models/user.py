@@ -9,8 +9,8 @@ class User(db.Model):
     created_at = db.Column(db.Date())
     updated_at = db.Column(db.Date())
 
-    def __init__(self, username, email, password, date):
+    def __init__(self, username, email, password, created_at):
         self.username = username
         self.email = email
         self.password = password
-        self.date = date
+        self.created_at = created_at
