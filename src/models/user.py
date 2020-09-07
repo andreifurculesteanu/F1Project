@@ -6,7 +6,8 @@ class User(db.Model):
     username = db.Column(db.String(length=255))
     email = db.Column(db.String(length=255))
     password = db.Column(db.String(length=255))
-    date = db.Column(db.Date())
+    created_at = db.Column(db.Date())
+    updated_at = db.Column(db.Date())
 
     def __init__(self, username, email, password, date):
         self.username = username
