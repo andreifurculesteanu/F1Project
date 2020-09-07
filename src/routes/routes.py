@@ -34,7 +34,7 @@ def post_register():
     count_username = User.query.filter_by(username=user).count()
     if count_username != 0:
         msg_user = "Username already exists!"
-        return render_template('register.html', msg_password=msg_password)
+        return render_template('register.html', msg_user=msg_user)
     else:
         date_register = date.today()
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
