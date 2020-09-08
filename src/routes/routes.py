@@ -64,3 +64,8 @@ def post_register():
 @app.route('/profile')
 def get_profile():
     return render_template('profile.html')
+
+
+@app.route('/edit')
+def get_edit():
+    return render_template('edit_profile.html')
