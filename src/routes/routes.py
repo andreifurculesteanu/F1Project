@@ -74,3 +74,9 @@ def get_profile():
 @app.route('/edit')
 def get_edit():
     return render_template('edit_profile.html')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home'))
