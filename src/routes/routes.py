@@ -1,5 +1,5 @@
 import bcrypt
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from src import app, db
 from src.models.user import User
 from datetime import date
@@ -26,6 +26,7 @@ def post_login():
         return render_template('login.html', msg_user=msg_user)
     else:
         if bcrypt.checkpw(password.encode('utf-8'), user_db.password.encode('utf-8')):
+            session['username'] = user
             return redirect(url_for('get_profile'))
         else:
             msg_user = "Username and/or password invalid"
