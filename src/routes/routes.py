@@ -27,6 +27,7 @@ def post_login():
     else:
         if bcrypt.checkpw(password.encode('utf-8'), user_db.password.encode('utf-8')):
             session['username'] = user
+            session['logged_in'] = True
             return redirect(url_for('get_profile'))
         else:
             msg_user = "Username and/or password invalid"
@@ -64,7 +65,10 @@ def post_register():
 
 @app.route('/profile')
 def get_profile():
-    return render_template('profile.html')
+    if session.get('logged_in'):
+        return render_template('profile.html')
+    else:
+        return render_template('login.html')
 
 
 @app.route('/edit')
