@@ -66,7 +66,8 @@ def post_register():
 @app.route('/profile')
 def get_profile():
     if session.get('logged_in'):
-        return render_template('profile.html')
+        username = session.get('username')
+        return render_template('profile.html', username = username)
     else:
         return render_template('login.html')
 

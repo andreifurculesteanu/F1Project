@@ -5,11 +5,15 @@
 {% endblock %}
 
 {% block title %}
-<title>Register</title>
+<title>Profile</title>
 {% endblock %}
 
 {% block content %}
  <p> This will be your profile </p>
+<br>
+{% if username %}
+ <p>Hello, {{ username }}</p>
+{% endif %}
 <br>
 <a href="/edit" class="button">Edit profile</a>
 <br><br>
