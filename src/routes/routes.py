@@ -81,3 +81,11 @@ def get_edit():
 def logout():
     session.clear()
     return redirect(url_for('home'))
+
+
+@app.route('/delete')
+def delete():
+    db.session.delete(User.query.filter_by(username=session.get('username')).first())
+    db.session.commit()
+    session.clear()
+    return redirect(url_for('home'))
