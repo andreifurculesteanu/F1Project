@@ -72,12 +72,50 @@ def get_profile():
         return render_template('login.html')
 
 
-@app.route('/edit')
+@app.route('/edit', methods=['GET'])
 def get_edit():
-    return render_template('edit_profile.html')
+    if session.get('logged_in'):
+        username = session.get('username')
+        user = User.query.filter_by(username=username).first()
+        return render_template('edit_profile.html', user=user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/edit', methods=['POST'])
+def post_edit():
+    user_session = session.get('username')
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['psw']
+    password_rp = request.form['psw-repeat']
+    user = User.query.filter_by(username=user_session).first()
+    user.username = username
+    user.email = email
+    if len(password) > 0 and len(password_rp) > 0:
+        if password == password_rp:
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            user.password = hashed_password
+        else:
+            msg_password = "Password doesn't match!"
+            user = User.query.filter_by(username=username).first()
+            return render_template('edit_profile.html', msg_password=msg_password, user=user)
+    user.updated_at = date.today().strftime("%Y/%m/%d")
+    db.session.commit()
+    session['username'] = username
+    return redirect(url_for('get_profile'))
 
 
 @app.route('/logout')
 def logout():
+    session.clear()
+    return redirect(url_for('home'))
+
+
+@app.route('/delete', methods=['POST'])
+def post_delete():
+    user = User.query.filter_by(username=session.get('username')).first()
+    db.session.delete(user)
+    db.session.commit()
     session.clear()
     return redirect(url_for('home'))

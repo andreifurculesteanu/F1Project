@@ -10,25 +10,27 @@
 
 {% block content %}
 <div>
-    <form action="" method="POST">
+    <form action="{{ url_for('post_edit') }}" method="POST">
         <div class="container">
             <h1>Edit profile</h1>
             <p>Please fill in this form to create an account.</p>
             <hr>
 
             <label for="username"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="username" id="username" required>
+            <input type="text" placeholder="Enter Username" name="username" id="username" value = "{{user.username}}" required>
 
 
             <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" id="email" required>
+            <input type="text" placeholder="Enter Email" name="email" id="email" value = "{{user.email}}" required>
 
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+            <input type="password" placeholder="Enter Password" name="psw" id="psw" value = "" >
 
             <label for="psw-repeat"><b>Repeat Password</b></label>
-            <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-
+            <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" value = "" >
+            {% if msg_password %}
+                <p>{{ msg_password }}</p>
+            {% endif %}
             <hr>
 
             <button type="submit" class="registerbtn">Update profile</button>
