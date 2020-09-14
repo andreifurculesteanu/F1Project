@@ -72,8 +72,19 @@ def get_profile():
         return render_template('login.html')
 
 
-@app.route('/edit')
+@app.route('/edit', methods=['GET'])
 def get_edit():
+    if session.get('logged_in'):
+        username = session.get('username')
+        user = User.query.filter_by(username=username).first()
+        return render_template('edit_profile.html', user = user)
+    else:
+        return render_template('login.html')
+
+
+@app.route('/edit', methods=['POST'])
+def post_edit():
+
     return render_template('edit_profile.html')
 
 
