@@ -93,13 +93,10 @@ def post_edit():
     user.username = username
     user.email = email
     if len(password) > 0 and len(password_rp) > 0:
-        print("entra primer if")
         if password == password_rp:
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             user.password = hashed_password
-            print("entra por aqui")
         else:
-            print("entra por el else")
             msg_password = "Password doesn't match!"
             user = User.query.filter_by(username=username).first()
             return render_template('edit_profile.html', msg_password=msg_password, user=user)
@@ -115,9 +112,10 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/delete')
-def delete():
-    db.session.delete(User.query.filter_by(username=session.get('username')).first())
+@app.route('/delete', methods=['POST'])
+def post_delete():
+    user = User.query.filter_by(username=session.get('username')).first()
+    db.session.delete(user)
     db.session.commit()
     session.clear()
     return redirect(url_for('home'))
