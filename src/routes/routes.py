@@ -84,8 +84,23 @@ def get_edit():
 
 @app.route('/edit', methods=['POST'])
 def post_edit():
-
-    return render_template('edit_profile.html')
+    user_session = session.get('username')
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['psw']
+    password_rp = request.form['psw-repeat']
+    user = User.query.filter_by(username=user_session).first()
+    user.username = username
+    user.email = email
+    if len(password) > 0 & len(password_rp) > 0:
+        # ADD CHECK IF PASSWORRD == PASSWORD_RP
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        user.password = hashed_password
+    else:
+        msg_password = "Password doesn't match!"
+        return render_template('edit_profile.html', msg_password=msg_password)
+    user.save()
+    return redirect(url_for('get_profile'))
 
 
 @app.route('/logout')
