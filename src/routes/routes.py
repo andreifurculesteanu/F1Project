@@ -77,7 +77,7 @@ def get_edit():
     if session.get('logged_in'):
         username = session.get('username')
         user = User.query.filter_by(username=username).first()
-        return render_template('edit_profile.html', user = user)
+        return render_template('edit_profile.html', user=user)
     else:
         return render_template('login.html')
 
@@ -92,14 +92,20 @@ def post_edit():
     user = User.query.filter_by(username=user_session).first()
     user.username = username
     user.email = email
-    if len(password) > 0 & len(password_rp) > 0:
-        # ADD CHECK IF PASSWORRD == PASSWORD_RP
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        user.password = hashed_password
-    else:
-        msg_password = "Password doesn't match!"
-        return render_template('edit_profile.html', msg_password=msg_password)
-    user.save()
+    if len(password) > 0 and len(password_rp) > 0:
+        print("entra primer if")
+        if password == password_rp:
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            user.password = hashed_password
+            print("entra por aqui")
+        else:
+            print("entra por el else")
+            msg_password = "Password doesn't match!"
+            user = User.query.filter_by(username=username).first()
+            return render_template('edit_profile.html', msg_password=msg_password, user=user)
+    user.updated_at = date.today().strftime("%Y/%m/%d")
+    db.session.commit()
+    session['username'] = username
     return redirect(url_for('get_profile'))
 
 
