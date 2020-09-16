@@ -2,7 +2,7 @@ import bcrypt
 from flask import render_template, request, redirect, url_for, session
 from src import app, db
 from src.models.user import User
-from datetime import date
+import datetime
 
 
 @app.route('/')
@@ -67,9 +67,8 @@ def post_register():
         msg_email = "Email already exists!"
         return render_template('register.html', msg_email=msg_email)
     else:
-        date_register = date.today()
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        new_user = User(user, email, hashed_password, date_register.strftime("%Y/%m/%d"))
+        new_user = User(user, email, hashed_password, datetime.datetime.now())
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('get_login'))
@@ -112,7 +111,7 @@ def post_edit():
             msg_password = "Password doesn't match!"
             user = User.query.filter_by(username=username).first()
             return render_template('edit_profile.html', msg_password=msg_password, user=user)
-    user.updated_at = date.today().strftime("%Y/%m/%d")
+    user.updated_at = datetime.datetime.now()
     db.session.commit()
     session['username'] = username
     return redirect(url_for('get_profile'))
