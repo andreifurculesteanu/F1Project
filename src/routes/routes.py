@@ -12,7 +12,11 @@ def home():
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html')
+    if session.get('logged_in'):
+        username = session.get('username')
+        return render_template('profile.html', username = username)
+    else:
+        return render_template('login.html')
 
 
 @app.route('/login', methods=['POST'])
@@ -36,7 +40,11 @@ def post_login():
 
 @app.route('/register', methods=['GET'])
 def get_register():
-    return render_template('register.html')
+    if session.get('logged_in'):
+        username = session.get('username')
+        return render_template('profile.html', username = username)
+    else:
+        return render_template('register.html')
 
 
 @app.route('/register', methods=['POST'])
