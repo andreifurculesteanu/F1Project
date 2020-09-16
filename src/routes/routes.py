@@ -2,7 +2,7 @@ import bcrypt
 from flask import render_template, request, redirect, url_for, session
 from src import app, db
 from src.models.user import User
-from datetime import date
+import datetime
 
 
 @app.route('/')
@@ -12,7 +12,11 @@ def home():
 
 @app.route('/login', methods=['GET'])
 def get_login():
-    return render_template('login.html')
+    if session.get('logged_in'):
+        username = session.get('username')
+        return render_template('profile.html', username = username)
+    else:
+        return render_template('login.html')
 
 
 @app.route('/login', methods=['POST'])
@@ -36,7 +40,11 @@ def post_login():
 
 @app.route('/register', methods=['GET'])
 def get_register():
-    return render_template('register.html')
+    if session.get('logged_in'):
+        username = session.get('username')
+        return render_template('profile.html', username = username)
+    else:
+        return render_template('register.html')
 
 
 @app.route('/register', methods=['POST'])
@@ -51,13 +59,16 @@ def post_register():
         msg_password = "Password doesn't match!"
         return render_template('register.html', msg_password=msg_password)
     count_username = User.query.filter_by(username=user).count()
+    count_email = User.query.filter_by(email=email).count()
     if count_username != 0:
         msg_user = "Username already exists!"
         return render_template('register.html', msg_user=msg_user)
+    elif count_email != 0:
+        msg_email = "Email already exists!"
+        return render_template('register.html', msg_email=msg_email)
     else:
-        date_register = date.today()
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        new_user = User(user, email, hashed_password, date_register.strftime("%Y/%m/%d"))
+        new_user = User(user, email, hashed_password, datetime.datetime.now())
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('get_login'))
@@ -100,7 +111,7 @@ def post_edit():
             msg_password = "Password doesn't match!"
             user = User.query.filter_by(username=username).first()
             return render_template('edit_profile.html', msg_password=msg_password, user=user)
-    user.updated_at = date.today().strftime("%Y/%m/%d")
+    user.updated_at = datetime.datetime.now()
     db.session.commit()
     session['username'] = username
     return redirect(url_for('get_profile'))
