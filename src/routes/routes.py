@@ -21,16 +21,15 @@ def get_login():
 
 @app.route('/login', methods=['POST'])
 def post_login():
-    msg_user = ""
-    user = request.form["username"]
+    email = request.form["email"]
     password = request.form["psw"]
-    user_db = User.query.filter_by(username=user).first()
+    user_db = User.query.filter_by(email=email).first()
     if user_db is None:
         msg_user = "Username and/or password invalid"
         return render_template('login.html', msg_user=msg_user)
     else:
         if bcrypt.checkpw(password.encode('utf-8'), user_db.password.encode('utf-8')):
-            session['username'] = user
+            session['username'] = user_db.username
             session['logged_in'] = True
             return redirect(url_for('get_profile'))
         else:
