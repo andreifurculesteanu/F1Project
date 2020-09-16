@@ -49,8 +49,6 @@ def get_register():
 
 @app.route('/register', methods=['POST'])
 def post_register():
-    msg_password = ""
-    msg_user = ""
     user = request.form["username"]
     email = request.form["email"]
     password = request.form["psw"]
@@ -58,14 +56,9 @@ def post_register():
     if password != password_repeat:
         msg_password = "Password doesn't match!"
         return render_template('register.html', msg_password=msg_password)
-    count_username = User.query.filter_by(username=user).count()
-    count_email = User.query.filter_by(email=email).count()
-    if count_username != 0:
-        msg_user = "Username already exists!"
-        return render_template('register.html', msg_user=msg_user)
-    elif count_email != 0:
-        msg_email = "Email already exists!"
-        return render_template('register.html', msg_email=msg_email)
+    exists = User.query.filter(User.email == email).scalar() is not None
+    if exists:
+        return render_template('register.html', msg_email="User already exists!")
     else:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         new_user = User(user, email, hashed_password, datetime.datetime.now())
