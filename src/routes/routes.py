@@ -63,6 +63,9 @@ def post_register():
         new_user = User(user, email, hashed_password, datetime.datetime.now())
         db.session.add(new_user)
         db.session.commit()
+        #AQUI SE SUPONE QUE METERIA EL CODIGO DONDE SE CREA EL MAIL Y LO ENVIO
+        #https://www.twilio.com/blog/2018/03/send-email-programmatically-with-gmail-python-and-flask.html
+        #ALA E LINKU DE UNDE AM LUAT TOT
         return redirect(url_for('get_login'))
 
 
